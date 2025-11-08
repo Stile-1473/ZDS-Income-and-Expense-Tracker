@@ -26,7 +26,7 @@ import java.util.UUID;
 public class ProfileService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProfileService.class);
-    @Value("${Billing_Profile_Activation}")
+   // @Value("${Billing_Profile_Activation}")
     private String activationUrl;
     private final ProfileRepository profileRepository;
     private final EmailService emailService;
@@ -71,24 +71,7 @@ public class ProfileService {
                 .build();
     }
 
-    public boolean activateProfile(String activationToken) {
-        return profileRepository.findByActivationToken(activationToken)
-                .map(profile -> {
-                    profile.setIsActive(true);
-                    profileRepository.save(profile);
-                    return true;
-                })
-                .orElse(false);
-    }
 
-    public boolean isAccountActive(String email) {
-        boolean active = profileRepository.findByEmail(email)
-                .map(ProfileEntity::getIsActive)
-                .orElse(false);
-        logger.info("Account active check for email {}: {}", email, active);
-        return active;
-
-    }
 
     public ProfileEntity getCurrentProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
