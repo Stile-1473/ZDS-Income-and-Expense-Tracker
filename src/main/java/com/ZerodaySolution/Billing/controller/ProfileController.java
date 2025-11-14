@@ -8,10 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+
 public class ProfileController {
 
     private final ProfileService profileService;
@@ -38,6 +40,16 @@ public class ProfileController {
 
 
     }
+
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDTO> getUseProfile() {
+        ProfileDTO profileDTO = profileService.getPublicProfile(null);
+        return ResponseEntity.ok(profileDTO);
+
+
+    }
+
+
     //testing jwt token
   /*  @GetMapping("/test")
     public String test(){
